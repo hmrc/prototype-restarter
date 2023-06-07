@@ -1,0 +1,19 @@
+{
+  "name": "prototype-restarter",
+  "version": "1.0.0",
+  "description": "Restarts heroku prototypes based on referrer header, so can be used as error page for stopped prototype to restart it automatically",
+  "main": "index.js",
+  "engines": {
+    "node": "v18.16.0"
+  },
+  "scripts": {
+    "start": "node -r dotenv/config index.js"
+  },
+  "author": "HMRC Platform UI Team",
+  "license": "Apache",
+  "dependencies": {
+    "dotenv": "^16.1.4",
+    "express": "^4.18.2",
+    "heroku-client": "^3.1.0"
+  }
+}
