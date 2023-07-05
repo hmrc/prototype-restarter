@@ -1,15 +1,8 @@
+const logger = require("./logger");
 const express = require("express");
+const app = express();
 const Heroku = require("heroku-client");
 const heroku = new Heroku({ token: process.env.HEROKU_API_TOKEN });
-const PORT = process.env.PORT || 3000;
-
-const winston = require("winston");
-const logger = winston.createLogger({
-  level: "info",
-  format: winston.format.json(),
-  defaultMeta: { service: "prototype-restarter" },
-  transports: [new winston.transports.Console()],
-});
 
 function isHerokuAppName(name) {
   return /^[a-z][a-z0-9-]{1,28}[a-z0-9]$/.test(name);
@@ -46,7 +39,7 @@ function respondWithHtmlWrappedInGovukLayout(res, status, body) {
     `);
 }
 
-express()
+app
   .get("/", (req, res) => {
     const prototypeFromReferrer = parsePrototypeFromReferrer(
       req.get("Referrer")
@@ -123,7 +116,6 @@ express()
       );
       res.status(400).send("");
     }
-  })
-  .listen(PORT, () => {
-    logger.info(`Listening on port ${PORT}`);
   });
+
+module.exports = app;
