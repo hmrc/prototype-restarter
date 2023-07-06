@@ -14,6 +14,20 @@ up the prototype name from the referrer header and restart it.
 After that the user is asked to refresh the page (which we can't do automatically because of restrictions on the iframe
 the error page is loaded within).
 
-### License
+## Running locally
+
+Assuming you have the heroku cli installed, we need a [HEROKU_API_TOKEN](https://github.com/hmrc/prototype-restarter/blob/main/src/app.js#L5C48-L5C64) to make calls to Heroku API
+
+The `npm start` script uses the dotenv library to automatically load environment variables from a `.env` file if present 
+
+```
+nvm install
+heroku login
+echo "HEROKU_API_TOKEN=$(heroku auth:token)" > .env
+npm install
+npm start
+```
+
+## License
 
 This code is open source software licensed under the [Apache 2.0 License]("http://www.apache.org/licenses/LICENSE-2.0.html").
