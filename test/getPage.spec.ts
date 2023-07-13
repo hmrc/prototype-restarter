@@ -41,6 +41,22 @@ describe('GET the root page', function () {
       });
   });
 
+  it('respond OK with HTML and restart button, when Heroku URL contains 12-digit string with no number', function (done) {
+    getDynosQuantity.mockReset();
+    getDynosQuantity.mockResolvedValue("0");
+
+    request(app)
+      .get('/')
+      .set('Referrer', 'https://some-protoype-with-arrangements.herokuapp.com/')
+      .expect(200, done)
+      .expect('Content-Type', /html/)
+      .expect((response) => {
+        expect(response.text.includes('This prototype is currently turned off')).toBe(true);
+        expect(response.text.includes('Restart prototype')).toBe(true);
+        expect(response.text.includes('<form method=\"post\" action=\"/some-protoype-with-arrangements\">')).toBe(true);
+      });
+  });
+
   it('respond OK with HTML when no valid referrer passed as header', function (done) {
     getDynosQuantity.mockReset();
     getDynosQuantity.mockResolvedValue("0");

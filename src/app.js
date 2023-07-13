@@ -43,7 +43,7 @@ function parsePrototypeFromReferrer(referrer) {
 function stripHerokuRandomString(subdomain) {
   const subdomainWordsArray = subdomain.split("-");
   const lastWord = subdomainWordsArray.slice(-1);
-  if(lastWord.toString().length === 12) {
+  if(lastWord.toString().length === 12 && /\d/.test(lastWord.toString())) {
     return subdomainWordsArray.slice(0, -1).join("-");
   } else {
     return subdomain;
