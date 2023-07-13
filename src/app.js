@@ -5,25 +5,28 @@ const app = express();
 const Heroku = require('heroku-client');
 const heroku = new Heroku({ token: process.env.HEROKU_API_TOKEN });
 
-function isHerokuAppName(name) {
-  return /^[a-z][a-z0-9-]{1,28}[a-z0-9]$/.test(name);
+/*
+  A Heroku app name can be up to 30 characters, plus a hyphen and 12-digit random subdomain string: https://devcenter.heroku.com/articles/app-names-and-subdomains#app-names
+ */
+function isHerokuAppName(subdomain) {
+  return /^[a-z][A-z0-9-]{1,42}[A-z0-9]$/.test(subdomain);
 }
 
 function parsePrototypeFromReferrer(referrer) {
   try {
-    const prototypeFromReferrer = new URL(referrer).host.split('.')[0];
+    const subdomainFromReferrer = new URL(referrer).host.split('.')[0];
 
-    if (isHerokuAppName(prototypeFromReferrer)) {
+    if (isHerokuAppName(subdomainFromReferrer)) {
       logger.info('Parsed prototype name from referrer successfully', {
         referrer,
-        prototypeFromReferrer,
+        subdomainFromReferrer,
       });
 
-      return prototypeFromReferrer;
+      return stripHerokuRandomString(subdomainFromReferrer);
     } else {
       logger.error(
         "First subdomain from referrer doesn't contain a valid heroku app name",
-        { referrer, prototypeFromReferrer }
+        { referrer, subdomainFromReferrer }
       );
     }
   } catch (err) {
@@ -31,6 +34,20 @@ function parsePrototypeFromReferrer(referrer) {
   }
 
   return "";
+}
+
+/*
+  As of June 2023, Heroku adds a random 12-digit string to the end of an app name to create the subdomain name:
+  https://devcenter.heroku.com/changelog-items/2597. These need to be stripped if present.
+ */
+function stripHerokuRandomString(subdomain) {
+  const subdomainWordsArray = subdomain.split("-");
+  const lastWord = subdomainWordsArray.slice(-1);
+  if(lastWord.toString().length === 12 && /\d/.test(lastWord.toString())) {
+    return subdomainWordsArray.slice(0, -1).join("-");
+  } else {
+    return subdomain;
+  }
 }
 
 function restartButton(prototypeFromReferrer) {
