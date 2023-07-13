@@ -7,7 +7,7 @@ const getDynosQuantity = async (prototypeFromReferrer) => {
     const formationResponse = await heroku.get(`/apps/${prototypeFromReferrer}/formation`);
     return formationResponse[0]['quantity'];
   } catch (err) {
-    logger.error("Unable to get dyno count", { err });
+    logger.error(`Unable to get dyno count for ${prototypeFromReferrer}`, { err });
     return -1;
   };
 };
