@@ -65,21 +65,23 @@ function generateBodyContent(dynosCount, prototypeFromReferrer) {
   if (dynosCount == -1) {
     return `
     <h1 class="govuk-heading-l govuk-!-margin-top-9">This prototype is not deployed</h1>
-    <p class="govuk-body">This name does not match a prototype currently deployed to Heroku.</p>
-    <p class="govuk-body">It may have been undeployed to conserve resources.</p>
+    <p class="govuk-body">This name does not match a prototype currently deployed to Heroku. It may have been undeployed to conserve resources.</p>
     <p class="govuk-body">Please also check this that is the correct prototype name.</p>
+    <p class="govuk-body">If you need assistance re-deploying, you can ask for the guidance via the #community-prototype channel in the HMRC Digital slack.</p>
+
     `
   } else if(dynosCount == 0) {
     return `
     <h1 class="govuk-heading-l govuk-!-margin-top-9">This prototype is currently turned off</h1>
-    <p class="govuk-body">This prototype is deployed to Heroku but is turned off.</p>
-    <p class="govuk-body">It may have been turned off to conserve resources.</p>
+    <p class="govuk-body">This prototype is deployed to Heroku but is turned off. It may have been turned off to conserve resources.</p>
+    <p class="govuk-body">If you're still having issues, you can ask for help in the #community-prototype channel in the HMRC Digital slack.</p>
     ${restartButton(prototypeFromReferrer)}
     `
   } else {
     return `
     <h1 class="govuk-heading-l govuk-!-margin-top-9">This prototype has errors</h1>
     <p class="govuk-body">This prototype is turned on but it failed to start up due to an error, please check the last change you deployed.</p>
+    <p class="govuk-body">If you're still having issues, or if your prototype is working locally but not when deployed to Heroku, you can reach out in the #community-prototype channel in the HMRC Digital slack.</p>
     `
   }
 }
@@ -111,7 +113,6 @@ app
       200,
       `
       ${content}
-      <p class="govuk-body">If you're still having issues, you can ask for help in the #community-prototype channel in the HMRC Digital slack.</p>
     `
     );
   })
