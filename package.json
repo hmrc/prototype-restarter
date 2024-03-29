@@ -15,7 +15,7 @@
   "license": "Apache",
   "dependencies": {
     "dotenv": "^16.1.4",
-    "express": "^4.18.2",
+    "express": "^4.19.2",
     "heroku-client": "^3.1.0",
     "winston": "^3.9.0"
   },
