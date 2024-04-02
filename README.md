@@ -1,7 +1,7 @@
 # prototype-restarter
 
 `prototype-restarter` is an application to serve a page that can be used to automatically restart a stopped prototype on 
-Heroku. Heroku prototypes cane be configured to redirect to `prototype-restarter` if a specific prototype is not running. 
+Heroku. Heroku prototypes can be configured to redirect to `prototype-restarter` if a specific prototype is not running. 
 Additionally, there are certain descriptive error messages loaded for other Heroku errors.
 
 `prototype-restarter` is itself a Node.js application that is deployed to Heroku.
