@@ -4,7 +4,7 @@
   "description": "Restarts heroku prototypes based on referrer header, so can be used as error page for stopped prototype to restart it automatically",
   "main": "src/app.js",
   "engines": {
-    "node": "v18.16.0"
+    "node": "v20.13.1"
   },
   "scripts": {
     "start": "node -r dotenv/config src/server.js",
@@ -14,14 +14,14 @@
   "author": "HMRC Platform UI Team",
   "license": "Apache",
   "dependencies": {
-    "dotenv": "^16.1.4",
-    "express": "^4.18.2",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
     "heroku-client": "^3.1.0",
-    "winston": "^3.9.0"
+    "winston": "^3.17.0"
   },
   "devDependencies": {
-    "jest": "^27.3.1",
-    "supertest": "^6.3.3",
-    "ts-jest": "^27.0.7"
+    "jest": "^30.1.2",
+    "supertest": "^7.1.4",
+    "ts-jest": "^29.4.1"
   }
 }
