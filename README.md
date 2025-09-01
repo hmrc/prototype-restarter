@@ -98,6 +98,12 @@ Updated at:  Mon Jul 10 2023 13:55:45 GMT+0100 (British Summer Time) (less than 
 
 If you don't set an expiry explicitly then the authorization won't expire.
 
+### Deployment
+
+To deploy `prototype-restarter` to heroku you need to have a heroku remote configured.
+
+How to add it and other information can be found [here](https://devcenter.heroku.com/articles/git).
+
 ## License
 
 This code is open source software licensed under the [Apache 2.0 License]("http://www.apache.org/licenses/LICENSE-2.0.html").
