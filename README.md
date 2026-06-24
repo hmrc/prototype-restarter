@@ -104,6 +104,16 @@ To deploy `prototype-restarter` to heroku you need to have a heroku remote confi
 
 How to add it and other information can be found [here](https://devcenter.heroku.com/articles/git).
 
+### Code formatting
+
+Nothing installed in project, no dep to manage, but could use this if you want to reformat the code:
+
+Not sure if npx respects min-release-age though so use with caution.
+
+```
+npx @biomejs/biome check --write
+```
+
 ## License
 
 This code is open source software licensed under the [Apache 2.0 License]("http://www.apache.org/licenses/LICENSE-2.0.html").

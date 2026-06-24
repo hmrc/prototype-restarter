@@ -1,10 +1,10 @@
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.json(),
-  defaultMeta: { service: 'prototype-restarter' },
-  transports: [new winston.transports.Console()],
+	level: "info",
+	format: winston.format.json(),
+	defaultMeta: { service: "prototype-restarter" },
+	transports: [new winston.transports.Console()],
 });
 
-export default logger
+export default logger;
