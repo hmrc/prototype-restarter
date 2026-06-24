@@ -1,23 +1,18 @@
-const assert = require('node:assert');
-const { describe, it } = require('node:test');
-const request = require('supertest');
+import assert from 'node:assert';
+import { describe, it, mock } from 'node:test';
+import request from 'supertest';
 
-function createTestApp(mockResult = "0") {
-  delete require.cache[require.resolve('../src/app')];
-  delete require.cache[require.resolve('../src/getDynosQuantity')];
+const getDynosQuantity = mock.fn(async () => 0);
 
-  const getDynosQuantity = require('../src/getDynosQuantity');
+mock.module('../src/getDynosQuantity.mjs', {
+  exports: { getDynosQuantity }
+})
 
-  getDynosQuantity.getDynosQuantity = async () => mockResult;
+const { default: app } = await import("../src/app.mjs");
 
-  return require('../src/app');
-}
-
-describe('GET the root page', function () {
+describe('GET the root page', function (t) {
 
   it('respond OK with HTML and restart button populated from referrer', async function() {
-    const app = createTestApp()
-
     const response = await request(app)
       .get('/')
       .set('Referrer', 'https://some-protoype-name.herokuapp.com/')
@@ -30,8 +25,6 @@ describe('GET the root page', function () {
   });
 
   it('respond OK with HTML and restart button when Heroku URL contains 12-digit string', async function() {
-    const app = createTestApp()
-
     const response = await request(app)
       .get('/')
       .set('Referrer', 'https://some-protoype-name-30936500fe0a.herokuapp.com/')
@@ -44,8 +37,6 @@ describe('GET the root page', function () {
   });
 
   it('respond OK with HTML and restart button, when Heroku URL contains 12-digit string with no number', async function() {
-    const app = createTestApp()
-
     const response = await request(app)
       .get('/')
       .set('Referrer', 'https://some-protoype-with-arrangements.herokuapp.com/')
@@ -58,8 +49,6 @@ describe('GET the root page', function () {
   });
 
   it('respond OK with HTML when no valid referrer passed as header', async function() {
-    const app = createTestApp()
-
     const response = await request(app).get('/')
 
     assert.match(response.headers["content-type"], /html/);
@@ -69,8 +58,6 @@ describe('GET the root page', function () {
   });
 
   it('returns informative content when dyno count is 0', async function() {
-    const app = createTestApp()
-
     const response = await request(app).get('/')
 
     assert.match(response.headers["content-type"], /html/);
@@ -82,7 +69,7 @@ describe('GET the root page', function () {
   });
 
   it('returns informative content when dyno count is -1 due to error', async function() {
-    const app = createTestApp("-1")
+    getDynosQuantity.mock.mockImplementationOnce(async () => -1);
 
     const response = await request(app).get('/')
 
@@ -95,7 +82,7 @@ describe('GET the root page', function () {
   });
 
   it('returns informative content when dyno count is greater than 0', async function() {
-    const app = createTestApp("2")
+    getDynosQuantity.mock.mockImplementationOnce(async () => 1);
 
     const response = await request(app).get('/')
 

@@ -1,8 +1,8 @@
-const Heroku = require('heroku-client');
+import Heroku from 'heroku-client';
 const heroku = new Heroku({ token: process.env.HEROKU_API_TOKEN });
-const logger = require('./logger');
+import logger from './logger.mjs';
 
-const getDynosQuantity = async (prototypeFromReferrer) => {
+export async function getDynosQuantity(prototypeFromReferrer) {
   try {
     const formationResponse = await heroku.get(`/apps/${prototypeFromReferrer}/formation`);
     return formationResponse[0]['quantity'];
@@ -11,5 +11,3 @@ const getDynosQuantity = async (prototypeFromReferrer) => {
     return -1;
   };
 };
-
-module.exports = { getDynosQuantity };

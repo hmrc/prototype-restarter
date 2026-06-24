@@ -1,8 +1,8 @@
-const logger = require('./logger');
-const { getDynosQuantity } = require('./getDynosQuantity');
-const express = require('express');
+import logger from './logger.mjs';
+import { getDynosQuantity } from './getDynosQuantity.mjs';
+import express from 'express';
 const app = express();
-const Heroku = require('heroku-client');
+import Heroku from 'heroku-client';
 const heroku = new Heroku({ token: process.env.HEROKU_API_TOKEN });
 
 /*
@@ -167,4 +167,4 @@ app
     }
   });
 
-module.exports = app;
+export default app
